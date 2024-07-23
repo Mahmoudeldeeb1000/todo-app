@@ -7,6 +7,7 @@ class AppColor{
   static Color white = Colors.white;
   static Color bottom1 = Color(0xff90B6E2);
   static Color bottom2 = Color(0xffCDACD3);
+  static Color appbarcolor = Color(0xff90B6E2);
 
 
 }

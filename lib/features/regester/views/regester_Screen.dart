@@ -1,11 +1,30 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:todo/core/utils/app_Images.dart';
 import 'package:todo/core/utils/app_colors.dart';
 import 'package:todo/core/utils/app_texts.dart';
+import 'package:todo/features/home/views/home_screen.dart';
 
-class RegesterScreen extends StatelessWidget {
+class RegesterScreen extends StatefulWidget {
   const RegesterScreen({super.key});
+
+  @override
+  State<RegesterScreen> createState() => _RegesterScreenState();
+}
+
+class _RegesterScreenState extends State<RegesterScreen> {
+  XFile? myPhoto;
+
+  Future<XFile?> pickImage() async{
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    return image;
+  }
+  TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +35,41 @@ class RegesterScreen extends StatelessWidget {
           child: Column(
             children: [
               Image.asset(AppImages.regester),
+              GestureDetector(
+                 onTap: (){
+                   pickImage().then((value) {
+                     myPhoto = value;
+                     setState(() {
 
-              Container(
-                height: 120,
-                width: 120,
-                child: Icon(Icons.add_a_photo,color: AppColor.bottom1,size: 40,),
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColor.bottom1),
-                borderRadius: BorderRadius.circular(20)
+                     });
+                   });
+                 },
+                child: Container(
+
+                  height: 120,
+                  width: 120,
+                  child: myPhoto==null? Icon(Icons.add_a_photo,color: AppColor.bottom1,size: 40,):
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                      child: Image.file(File(myPhoto!.path), fit: BoxFit.fill,)),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColor.bottom1),
+                  borderRadius: BorderRadius.circular(20)
+                ),
+                ),
               ),
-              ),
-              Text(AppTexts.addphoto),
+              TextButton(
+                  onPressed: (){
+                    pickImage().then((value) {
+                      myPhoto = value;
+                      setState(() {
+                      });
+                    });
+                  },
+                  child: Text(   myPhoto==null? AppTexts.addphoto:AppTexts.changephoto)),
               SizedBox(height: 40,),
               TextFormField(
+                controller: nameController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
@@ -65,6 +106,16 @@ class RegesterScreen extends StatelessWidget {
                 ),
                 child: MaterialButton(
                   onPressed: (){
+                    if(myPhoto==null || nameController.text==null){
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("please enter your data")));
+                    }else{
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) {
+                        return HomeScreen(photo: File(myPhoto!.path),
+
+
+                          name: nameController.text,);
+                      },));
+                    }
 
                   },
                   child: Row(
