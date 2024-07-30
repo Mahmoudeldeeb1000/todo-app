@@ -10,8 +10,8 @@ import 'package:todo/features/archive/archive_screen.dart';
 import 'package:todo/features/home/views/home_screen.dart';
 import 'package:todo/features/task_details/task_details_screen.dart';
 import '../../core/utils/app_colors.dart';
-class UnarchiveDetailsScreen extends StatefulWidget {
-  UnarchiveDetailsScreen({super.key,required this.index, required this.title, required this.dec, required this.time, required this.startDate, required this.endDate, required this.archive, required this.name,required this.photo,  });
+class ArchiveDetailsScreen extends StatefulWidget {
+  ArchiveDetailsScreen({super.key,required this.index, required this.title, required this.dec, required this.time, required this.startDate, required this.endDate, required this.archive, required this.name,required this.photo,  });
   final String title;
   final String dec;
   final String time;
@@ -23,16 +23,15 @@ class UnarchiveDetailsScreen extends StatefulWidget {
   final File photo;
 
   @override
-  State<UnarchiveDetailsScreen> createState() => _UnarchiveDetailsScreenState();
+  State<ArchiveDetailsScreen> createState() => _ArchiveDetailsScreenState();
 }
 
-class _UnarchiveDetailsScreenState extends State<UnarchiveDetailsScreen> {
+class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF4F7F5),
       appBar: AppBar(
-        backgroundColor: Color(0xffF4F7F5),
+        backgroundColor: Theme.of(context).brightness==Brightness.dark?Color(0xff18283A):Color(0xffF9FEFB),
         title: Text("Task Details",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
         centerTitle: true,
       ),
@@ -44,7 +43,7 @@ class _UnarchiveDetailsScreenState extends State<UnarchiveDetailsScreen> {
                 Container(
                     height: 70,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     width: double.infinity,
@@ -53,8 +52,8 @@ class _UnarchiveDetailsScreenState extends State<UnarchiveDetailsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Task Name",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400),),
-                          Text(widget.title,style: TextStyle(color: Color(0xff8E8E8E)),)
+                          Text("Task Name",style:Theme.of(context).textTheme.bodySmall,),
+                          Text(widget.title,style: Theme.of(context).textTheme.bodySmall,)
                         ],
                       ),
                     )
@@ -66,7 +65,7 @@ class _UnarchiveDetailsScreenState extends State<UnarchiveDetailsScreen> {
                 child:
                 Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
 
@@ -77,8 +76,8 @@ class _UnarchiveDetailsScreenState extends State<UnarchiveDetailsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Descreption",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400),),
-                          Text(widget.dec,style: TextStyle(color: Color(0xff8E8E8E)))
+                          Text("Descreption",style: Theme.of(context).textTheme.bodySmall,),
+                          Text(widget.dec,style:Theme.of(context).textTheme.bodySmall,)
                         ],
                       ),
                     )
@@ -89,11 +88,11 @@ class _UnarchiveDetailsScreenState extends State<UnarchiveDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
-                    title:Text("Start Date"),
+                    title:Text("Start Date",style: Theme.of(context).textTheme.bodySmall,),
                     subtitle: Text(widget.startDate,style: TextStyle(color: AppColor.appbarcolor),),
                     leading: Icon(Icons.calendar_month_outlined,color: AppColor.appbarcolor,)
                 ),
@@ -104,11 +103,11 @@ class _UnarchiveDetailsScreenState extends State<UnarchiveDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
-                    title:Text("End Date"),
+                    title:Text("End Date",style: Theme.of(context).textTheme.bodySmall,),
                     subtitle: Text(widget.endDate,style: TextStyle(color: AppColor.appbarcolor),),
                     leading: Icon(Icons.calendar_month_outlined,color: AppColor.appbarcolor,)
                 ),
@@ -119,11 +118,11 @@ class _UnarchiveDetailsScreenState extends State<UnarchiveDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
-                    title:Text("Add Time"),
+                    title:Text("Add Time",style: Theme.of(context).textTheme.bodySmall),
                     subtitle: Text(widget.time,style: TextStyle(color: AppColor.appbarcolor),),
                     leading: Icon(Icons.calendar_month_outlined,color: AppColor.appbarcolor,)
                 ),
@@ -141,13 +140,7 @@ class _UnarchiveDetailsScreenState extends State<UnarchiveDetailsScreen> {
                 notes[widget.index].archive=false;
                 print(notes[widget.index].archive.toString());
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return TaskDetailsScreen(
-
-                      index: widget.index,
-                      title: notes[ widget.index].title,
-                      dec: notes[ widget.index].des, time: notes[ widget.index].time, startDate: notes[ widget.index].startDate, endDate: notes[ widget.index].endDate, archive: notes[ widget.index].archive, name:widget.name , photo: widget.photo
-
-                  );
+                  return HomeScreen(name: widget.name, photo: widget.photo);
                 },));
               },
             ),
@@ -174,7 +167,7 @@ class _UnarchiveDetailsScreenState extends State<UnarchiveDetailsScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content:    Text(AppTexts.areYouSureDeleteText,
+          content:    Text(AppTexts.areYouSureDeleteTask,
             style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w500,

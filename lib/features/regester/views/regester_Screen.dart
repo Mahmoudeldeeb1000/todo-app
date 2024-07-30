@@ -8,140 +8,15 @@ import 'package:todo/core/utils/app_Images.dart';
 import 'package:todo/core/utils/app_colors.dart';
 import 'package:todo/core/utils/app_texts.dart';
 import 'package:todo/features/home/views/home_screen.dart';
+import 'package:todo/features/regester/widgets/regester_body.dart';
 
-class RegesterScreen extends StatefulWidget {
+class RegesterScreen extends StatelessWidget {
   const RegesterScreen({super.key});
-
-  @override
-  State<RegesterScreen> createState() => _RegesterScreenState();
-}
-
-class _RegesterScreenState extends State<RegesterScreen> {
-  XFile? myPhoto;
-
-  Future<XFile?> pickImage() async{
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    return image;
-  }
-  TextEditingController nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(50.0),
-          child: Column(
-            children: [
-              Image.asset(AppImages.regester),
-              GestureDetector(
-                 onTap: (){
-                   pickImage().then((value) {
-                     myPhoto = value;
-                     setState(() {
-
-                     });
-                   });
-                 },
-                child: Container(
-
-                  height: 120,
-                  width: 120,
-                  child: myPhoto==null? Icon(Icons.add_a_photo,color: AppColor.bottom1,size: 40,):
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                      child: Image.file(File(myPhoto!.path), fit: BoxFit.fill,)),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColor.bottom1),
-                  borderRadius: BorderRadius.circular(20)
-                ),
-                ),
-              ),
-              TextButton(
-                  onPressed: (){
-                    pickImage().then((value) {
-                      myPhoto = value;
-                      setState(() {
-                      });
-                    });
-                  },
-                  child: Text(   myPhoto==null? AppTexts.addphoto:AppTexts.changephoto)),
-              SizedBox(height: 40,),
-              TextFormField(
-                controller: nameController,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide(color: AppColor.bottom1,
-                    ),
-                  ),
-                  focusedBorder:  OutlineInputBorder(
-                    borderSide: BorderSide( color: AppColor.bottom1),
-                    borderRadius: BorderRadius.circular(20)
-                  ),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20)
-                  ),
-                  labelText: "Your name",
-                  floatingLabelStyle: TextStyle(
-                    color: Colors.black
-                  ),
-                  hintText: "Enter your name",hintStyle: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xff6E6A7C).withOpacity(.5),
-                )
-                ),
-              ),
-              SizedBox(height: 50,),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: LinearGradient(
-                        colors:[
-                          AppColor.bottom1,
-                          AppColor.bottom2
-                        ]
-                    )
-                ),
-                child: MaterialButton(
-                  onPressed: (){
-                    if(myPhoto==null || nameController.text==null){
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("please enter your data")));
-                    }else{
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) {
-                        return HomeScreen(photo: File(myPhoto!.path),
-
-
-                          name: nameController.text,);
-                      },));
-                    }
-
-                  },
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(AppTexts.getStarted,
-                          textAlign: TextAlign.center,
-                          style:TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
-                            color: AppColor.white,
-                          ) ,
-                        ),
-                      ),
-                    ],
-                  ),
-
-
-                ),
-              )
-
-
-            ],
-          ),
-        ),
-      ),
+      body: RegesterBody()
     );
   }
 }

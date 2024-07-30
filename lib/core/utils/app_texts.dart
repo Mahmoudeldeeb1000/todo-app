@@ -5,5 +5,5 @@ class AppTexts{
   static String getStarted="Get Started";
   static String noText="No";
   static String yesText="Yes";
-  static String areYouSureDeleteText="AreYouSureDeleteText";
+  static String areYouSureDeleteTask="Are You Sure to Delete Task?";
 }

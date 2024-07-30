@@ -1,12 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/features/done_tasks/done_details_screen.dart';
-
 import '../../core/models/note_model.dart';
 import '../../core/utils/app_colors.dart';
-
 class DoneTasksScreen extends StatefulWidget {
    DoneTasksScreen({super.key, required this.name,required this.photo});
    final String name;
@@ -20,7 +17,7 @@ class _DoneTasksScreenState extends State<DoneTasksScreen> {
   Widget build (BuildContext context) {
    return Scaffold(
      appBar: AppBar(
-       backgroundColor: Color(0xffF4F7F5),
+       backgroundColor: Theme.of(context).brightness==Brightness.dark?Color(0xff18283A):Color(0xffF9FEFB),
        title: Text("Done Tasks",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
        centerTitle: true,
      ),
@@ -43,13 +40,13 @@ class _DoneTasksScreenState extends State<DoneTasksScreen> {
             child: ListTile(
                 trailing: Column(
                   children: [
-                    Text(dones[index].startDate.toString(),style: TextStyle(fontSize: 12,color: Color(0xff24252C)),),
-                    Text(dones[index].endDate.toString(),style: TextStyle(fontSize: 12,color: Color(0xff24252C)),),
+                    Text(dones[index].startDate.toString(),style: TextStyle(fontSize: 12,color:Theme.of(context).brightness==Brightness.dark?Colors.white :Color(0xff24364B),),),
+                    Text(dones[index].endDate.toString(),style: TextStyle(fontSize: 12,color: Theme.of(context).brightness==Brightness.dark?Colors.white :Color(0xff24364B),),),
                   ],
                 ),
-                title:Text(dones[index].title) ,
+                title:Text(dones[index].title,) ,
                 subtitle: Text(dones[index].time,style: TextStyle(color: AppColor.appbarcolor),),
-                leading: Icon(Icons.shopping_bag,color: AppColor.appbarcolor,)
+                leading: Icon(Icons.shopping_bag,color: AppColor.appbarcolor,),
             ),
           ):
           Container();

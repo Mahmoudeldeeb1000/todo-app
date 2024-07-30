@@ -2,15 +2,18 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/features/archive/archive_screen.dart';
+import 'package:todo/features/controler/theme_controler.dart';
 import 'package:todo/features/done_tasks/done_tasks_screen.dart';
 
 import '../../../core/utils/app_colors.dart';
 
 class DrawerScreen extends StatefulWidget {
-  const DrawerScreen({super.key, required this.name, required this.photo});
+   DrawerScreen({super.key, required this.name, required this.photo});
 final String name;
 final File photo;
+
 
   @override
   State<DrawerScreen> createState() => _DrawerScreenState();
@@ -23,7 +26,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         DrawerHeader(
-            decoration: BoxDecoration(color: AppColor.appbarcolor),
+            decoration: BoxDecoration(color: Theme.of(context).brightness==Brightness.dark?Color(0xff2A4463):AppColor.appbarcolor),
             child: Row(
               children: [
                 Container(
@@ -65,7 +68,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     bottomRight: Radius.circular(15)
                 )
             ),
-            tileColor:Color(0xffEFF6F8),
+            tileColor:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
             leading: Icon(Icons.archive),
             title: Text("Archived Tasks",style: TextStyle(color:Color(0xff90B6E2) ),),
           ),
@@ -85,7 +88,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
               }));
             },
-            tileColor: Color(0xffEFF6F8),
+            tileColor: Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                     topRight: Radius.circular(15),
@@ -94,6 +97,30 @@ class _DrawerScreenState extends State<DrawerScreen> {
             ),
             title: Text("Done Tasks",style: TextStyle(color: Color(0xff90B6E2))),
             leading: Icon(Icons.cloud_done_rounded),
+          ),
+        ),
+        SizedBox(height: 10,),
+        Padding(
+          padding: const EdgeInsets.only(right: 24.0),
+          child: ListTile(
+            onTap: ( ){
+            },
+            tileColor: Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(15),
+                    bottomRight: Radius.circular(15)
+                )
+            ),
+            title: Text("mode",style: TextStyle(color: Color(0xff90B6E2))),
+            leading: Icon(Icons.dark_mode),
+            trailing: Switch(
+              value: Provider.of<ThemeProvider>(context).switchValue,
+              onChanged:  (v) {
+               Provider.of<ThemeProvider>(context,listen: false).changeSwitchValue(v);
+
+              },
+            )
           ),
         ),
       ],

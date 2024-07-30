@@ -10,6 +10,7 @@ import 'package:todo/core/utils/app_Images.dart';
 import 'package:todo/core/utils/app_colors.dart';
 import 'package:todo/features/add_tasks/views/add_tasks_screen.dart';
 import 'package:todo/features/home/views/drawer_screen.dart';
+import 'package:todo/features/home/widgets/home_body.dart';
 import 'package:todo/features/task_details/task_details_screen.dart';
 class HomeScreen extends StatefulWidget {
    HomeScreen({super.key,required this.name,required this.photo ,});
@@ -42,19 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
      appBar: AppBar(
-       leading: GestureDetector(
-         onTap: (){
-           Scaffold.of(context).openDrawer();
-         },
-           child: Image.asset(AppImages.menu)
-       ),
-       backgroundColor: AppColor.appbarcolor,
-       title: Column(
-         children: [Text("Hello!"),
-           Text(widget.name),
-           Text(DateTime.now().toString().split(" ")[0],style: TextStyle( color: AppColor.white),),],
-       ),
+     
 
+       title: Column(
+         children: [Text("Hello!",style: Theme.of(context).textTheme.bodySmall,),
+           Text(widget.name),
+           SizedBox(height: 10,),
+           Text(DateTime.now().toString().split(" ")[0],style: Theme.of(context).textTheme.bodySmall,),],
+       ),
        toolbarHeight: 150,
        actions: [
          Column(
@@ -82,7 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
            ],
          )
        ],
-
      ),
      drawer: Drawer(
        child: DrawerScreen(
@@ -91,62 +86,8 @@ class _HomeScreenState extends State<HomeScreen> {
        ),
      ),
      body: notes.isEmpty?
-     Center(child: Text(" No Notes please add task")):
-       ListView.builder(
-       itemCount: notes.length,
-         itemBuilder: (context, index) {
-           return notes[index].deleted? Container(): Dismissible(
-             background: Container(
-               padding: EdgeInsets.all(20),
-             alignment: Alignment.centerLeft,
-               child: Icon(Icons.delete),
-               color: Colors.red,
-             ),
-             key: GlobalKey(),
-             child: GestureDetector(
-               onTap: (){
-                 Navigator.push(context, MaterialPageRoute(builder:(context) {
-                   return TaskDetailsScreen(
-                     photo: widget.photo,
-                       name: widget.name,
-                       title:notes[index].title ,
-                       dec: notes[index].des,
-                       time:notes[index].time,
-                       startDate: notes[index].startDate,
-                       endDate: notes[index].endDate,
-                   archive: notes[index].archive,
-                     index: index,
-                   );
-
-                 },));
-               },
-               child: ListTile(
-
-                 trailing: GestureDetector(
-                   onTap: (){
-                     setState(() {});
-                     notes[index].doneOrNot= !notes[index].doneOrNot;
-                   },
-                   child: Container(padding: EdgeInsets.all(10),
-                     decoration: BoxDecoration(
-                       borderRadius: BorderRadius.circular(10),
-                       color: notes[index].doneOrNot? AppColor.appbarcolor:AppColor.white,
-                     border: Border.all(color:AppColor.appbarcolor)
-                     ),
-
-
-                     child: Text("done",style: TextStyle(color:notes[index].doneOrNot? AppColor.white:Colors.black),),
-                   ),
-                 ),
-                 title:Text(notes[index].title) ,
-                 subtitle: Text(notes[index].time,style: TextStyle(color: AppColor.appbarcolor),),
-                 leading: Icon(Icons.shopping_bag,color: AppColor.appbarcolor,)
-               ),
-             ),
-           );
-         },),
-
-
+     Center(child: Text(" No Notes please add task",style: Theme.of(context).textTheme.bodySmall,),):
+       HomeBody(name: widget.name, photo: widget.photo)
    );
   }
 }

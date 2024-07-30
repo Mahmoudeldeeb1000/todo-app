@@ -30,9 +30,9 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF4F7F5),
+
       appBar: AppBar(
-        backgroundColor: Color(0xffF4F7F5),
+        backgroundColor: Theme.of(context).brightness==Brightness.dark?Color(0xff18283A):Color(0xffF9FEFB),
         title: Text("Task Details",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
         centerTitle: true,
       ),
@@ -44,7 +44,7 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
                 Container(
                     height: 70,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     width: double.infinity,
@@ -53,8 +53,8 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Task Name",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400),),
-                          Text(widget.title,style: TextStyle(color: Color(0xff8E8E8E)),)
+                          Text("Task Name",style: Theme.of(context).textTheme.bodySmall),
+                          Text(widget.title,style: Theme.of(context).textTheme.bodySmall)
                         ],
                       ),
                     )
@@ -66,7 +66,7 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
                 child:
                 Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
 
@@ -77,8 +77,8 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Descreption",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400),),
-                          Text(widget.dec,style: TextStyle(color: Color(0xff8E8E8E)))
+                          Text("Descreption",style: Theme.of(context).textTheme.bodySmall),
+                          Text(widget.dec,style:Theme.of(context).textTheme.bodySmall)
                         ],
                       ),
                     )
@@ -89,7 +89,7 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
@@ -104,7 +104,7 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
@@ -119,7 +119,7 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(

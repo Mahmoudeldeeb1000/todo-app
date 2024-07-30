@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:todo/features/archive/unarchive_details_screen.dart';
+import 'package:todo/features/archive/archive_details_screen.dart';
 import 'package:todo/features/task_details/task_details_screen.dart';
 
 import '../../core/models/note_model.dart';
@@ -23,7 +23,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xffF4F7F5),
+        backgroundColor: Theme.of(context).brightness==Brightness.dark?Color(0xff18283A):Color(0xffF9FEFB),
         title: Text("Archived Tasks",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
         centerTitle: true,
       ),
@@ -34,7 +34,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
           return GestureDetector(
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return UnarchiveDetailsScreen(
+                return ArchiveDetailsScreen(
                     index: index,
                     title: notes[index].title,
                     dec: notes[index].des, time: notes[index].time, startDate: notes[index].startDate, endDate: notes[index].endDate, archive: notes[index].archive, name:widget.name , photo: widget.photo
@@ -69,7 +69,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                       child: Text("Unarchive",style: TextStyle(color:notes[index].doneOrNot? AppColor.white:Colors.black),),
                     ),
                   ),
-                  title:Text(archives[index].title) ,
+                  title:Text(archives[index].title,style: Theme.of(context).textTheme.bodySmall,) ,
                   subtitle: Text(archives[index].time,style: TextStyle(color: AppColor.appbarcolor),),
                   leading: Icon(Icons.shopping_bag,color: AppColor.appbarcolor,)
               ):
