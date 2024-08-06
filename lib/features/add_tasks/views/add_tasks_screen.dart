@@ -57,8 +57,6 @@ class _AddTasksScreenState extends State<AddTasksScreen> {
             controller: nameController,
             style: TextStyle(color: Theme.of(context).brightness==Brightness.dark?Colors.white :Color(0xff24364B),),
             decoration: InputDecoration(
-
-
               fillColor: Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
               filled: true,
               enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15),borderSide: BorderSide(color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B):Colors.white)),

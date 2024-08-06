@@ -13,7 +13,6 @@ class RegesterBody extends StatefulWidget {
 }
 class _RegesterBodyState extends State<RegesterBody> {
   XFile? myPhoto;
-
   Future<XFile?> pickImage() async{
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
@@ -33,12 +32,10 @@ class _RegesterBodyState extends State<RegesterBody> {
                 pickImage().then((value) {
                   myPhoto = value;
                   setState(() {
-
                   });
                 });
               },
               child: Container(
-
                 height: 120,
                 width: 120,
                 child: myPhoto==null? Icon(Icons.add_a_photo,color: AppColor.bottom1,size: 40,):
@@ -63,7 +60,6 @@ class _RegesterBodyState extends State<RegesterBody> {
             ),
             SizedBox(height: 40,),
             TextFormField(
-
               controller: nameController,
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(

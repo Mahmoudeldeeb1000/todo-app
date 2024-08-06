@@ -50,11 +50,15 @@ class _HomeBodyState extends State<HomeBody> {
               },));
             },
             child: ListTile(
-
                 trailing: GestureDetector(
                   onTap: (){
                     setState(() {});
                     notes[index].doneOrNot= !notes[index].doneOrNot;
+                    if(notes[index].doneOrNot==true){
+                      notes[index!].doneOrNot=true;
+                    }else{
+                      notes[index!].doneOrNot=false;
+                    }
                   },
                   child: Container(padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(

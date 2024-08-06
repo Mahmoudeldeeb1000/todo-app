@@ -129,6 +129,9 @@ class _TaskDetailsScreenBodyState extends State<TaskDetailsScreenBody> {
             onPressed: (){
               notes[widget.index!].archive=true;
               print(notes[widget.index!].archive.toString());
+              setState(() {
+
+              });
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return ArchiveScreen(
                   photo: widget.photo,
