@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           gradient: LinearGradient(
@@ -26,8 +26,8 @@ class CustomButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(title,style: TextStyle(color: Colors.white),),
-            SizedBox(width: 8,),
+            Text(title,style: const TextStyle(color: Colors.white),),
+            const SizedBox(width: 8,),
             icon == null ? const SizedBox():   Icon(icon,color: AppColor.white,)
 
           ],

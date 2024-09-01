@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:todo/core/utils/app_colors.dart';
 
 class AppTheme{
   final ThemeData lightMode=ThemeData(
       brightness: Brightness.light,
 
-      scaffoldBackgroundColor: Color(0xffF9FEFB),
+      scaffoldBackgroundColor: const Color(0xffF9FEFB),
       appBarTheme: AppBarTheme(
-          color: Color(0xffF9FEFB)
+          color: AppColor.appbarcolor
       ),
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
           titleLarge:  TextStyle(
               fontSize: 22,fontWeight: FontWeight.w600,
               color: Colors.black),
@@ -21,11 +22,11 @@ class AppTheme{
   );
   final ThemeData darkMode=ThemeData(
       brightness: Brightness.dark,
-      scaffoldBackgroundColor: Color(0xff18283A),
-      appBarTheme: AppBarTheme(
+      scaffoldBackgroundColor: const Color(0xff18283A),
+      appBarTheme: const AppBarTheme(
           color: Color(0xff2A4463)
       ),
-      textTheme: TextTheme(
+      textTheme: const TextTheme(
           titleLarge:  TextStyle(
               color: Colors.white,
               fontSize: 22,fontWeight: FontWeight.w600

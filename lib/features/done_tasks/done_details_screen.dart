@@ -1,14 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:todo/core/models/note_model.dart';
-import 'package:todo/core/share_widget/costom_botton.dart';
-import 'package:todo/core/utils/app_texts.dart';
-import 'package:todo/features/archive/archive_screen.dart';
-import 'package:todo/features/home/views/home_screen.dart';
-import 'package:todo/features/task_details/task_details_screen.dart';
 import '../../core/utils/app_colors.dart';
 class DoneTasksDetailsScreen extends StatefulWidget {
   DoneTasksDetailsScreen({super.key,required this.index, required this.title, required this.dec, required this.time, required this.startDate, required this.endDate, required this.archive, required this.name,required this.photo,  });
@@ -32,8 +24,8 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
     return Scaffold(
 
       appBar: AppBar(
-        backgroundColor: Theme.of(context).brightness==Brightness.dark?Color(0xff18283A):Color(0xffF9FEFB),
-        title: Text("Task Details",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
+        backgroundColor: Theme.of(context).brightness==Brightness.dark?const Color(0xff18283A):const Color(0xffF9FEFB),
+        title: const Text("Task Details",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
         centerTitle: true,
       ),
       body: ListView(
@@ -44,7 +36,7 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
                 Container(
                     height: 70,
                     decoration: BoxDecoration(
-                      color: Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                      color: Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     width: double.infinity,
@@ -60,13 +52,13 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
                     )
                 )
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Padding(
                 padding: const EdgeInsets.all(15.0),
                 child:
                 Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                      color: Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
 
@@ -89,11 +81,11 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                  color:Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
-                    title:Text("Start Date"),
+                    title:const Text("Start Date"),
                     subtitle: Text(widget.startDate,style: TextStyle(color: AppColor.appbarcolor),),
                     leading: Icon(Icons.calendar_month_outlined,color: AppColor.appbarcolor,)
                 ),
@@ -104,11 +96,11 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                  color: Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
-                    title:Text("End Date"),
+                    title:const Text("End Date"),
                     subtitle: Text(widget.endDate,style: TextStyle(color: AppColor.appbarcolor),),
                     leading: Icon(Icons.calendar_month_outlined,color: AppColor.appbarcolor,)
                 ),
@@ -119,11 +111,11 @@ class _DoneTasksDetailsScreenState extends State<DoneTasksDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                  color:Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
-                    title:Text("Add Time"),
+                    title:const Text("Add Time"),
                     subtitle: Text(widget.time,style: TextStyle(color: AppColor.appbarcolor),),
                     leading: Icon(Icons.calendar_month_outlined,color: AppColor.appbarcolor,)
                 ),

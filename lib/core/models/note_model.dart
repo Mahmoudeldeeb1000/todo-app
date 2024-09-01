@@ -18,7 +18,7 @@ class NoteModel{
   });
 }
 
-List<NoteModel> notes = [];
+
 
 
 

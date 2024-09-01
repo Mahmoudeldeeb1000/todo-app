@@ -2,16 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:todo/features/home/presentetion/controller/home_controller.dart';
+import 'package:todo/features/home/presentetion/views/home_screen.dart';
 import '../../../core/models/note_model.dart';
 import '../../../core/share_widget/costom_botton.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_texts.dart';
 import '../../archive/archive_screen.dart';
-import '../../home/views/home_screen.dart';
-
 class TaskDetailsScreenBody extends StatefulWidget {
-   TaskDetailsScreenBody({super.key, required this.title, required this.dec, required this.time, required this.startDate, required this.endDate, required this.archive, required this.name,required this.photo});
+   TaskDetailsScreenBody({super.key, required this.title, required this.dec, required this.time, required this.startDate, required this.endDate, required this.archive, required this.name,required this.photo, required this.noteModel,});
   final String title;
   final String dec;
   final String time;
@@ -21,6 +21,8 @@ class TaskDetailsScreenBody extends StatefulWidget {
   int? index;
   final String name;
   final File photo;
+  final NoteModel noteModel;
+
   @override
   State<TaskDetailsScreenBody> createState() => _TaskDetailsScreenBodyState();
 }
@@ -125,22 +127,10 @@ class _TaskDetailsScreenBodyState extends State<TaskDetailsScreenBody> {
               AppColor.bottom2
             ],
             icon: Icons.archive,
-            title: 'Archive',
             onPressed: (){
-              notes[widget.index!].archive=true;
-              print(notes[widget.index!].archive.toString());
-              setState(() {
-
-              });
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return ArchiveScreen(
-                  photo: widget.photo,
-                  name:  widget.name,
-                );
-              },)).then((value) => setState(() {
-
-              }));
-            },
+              Provider.of<HomeProvider>(context,listen: false).updateArchive(Provider.of<HomeProvider>(context,listen: false).notes.indexOf(widget.noteModel));
+              },
+            title: 'Archive',
           ),
           CustomButton(
             icon: Icons.delete,
@@ -150,11 +140,10 @@ class _TaskDetailsScreenBodyState extends State<TaskDetailsScreenBody> {
             ],
             title: "Delete",
             onPressed: (){
-              notes[widget.index!].archive=true;
+              Provider.of<HomeProvider>(context).notes[widget.index!].deleted=true;
               showDeleteDialog(context);
             },
           )
-
         ]
     );
   }
@@ -172,13 +161,13 @@ class _TaskDetailsScreenBodyState extends State<TaskDetailsScreenBody> {
               children: [
                 GestureDetector(
                   onTap: (){
-                    notes[widget.index!].deleted=true;
+                    Provider.of<HomeProvider>(context).notes[widget.index!].deleted=true;
                     Navigator.push(context, MaterialPageRoute(builder: (context) {
                       return HomeScreen(
                           name:widget.name ,
                           photo: widget.photo);
                     },)).then((value) => setState(() {
-                      notes[widget.index!].deleted=false;
+                      Provider.of<HomeProvider>(context).notes[widget.index!].deleted=false;
                     }));
                   },
                   child: Container(

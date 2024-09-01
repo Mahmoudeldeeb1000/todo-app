@@ -1,33 +1,32 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/features/archive/archive_details_screen.dart';
-import 'package:todo/features/task_details/task_details_screen.dart';
 
 import '../../core/models/note_model.dart';
 import '../../core/utils/app_colors.dart';
+import '../home/presentetion/controller/home_controller.dart';
 
 class ArchiveScreen extends StatefulWidget {
-   ArchiveScreen({super.key, required this.name,required this.photo,});
+   const ArchiveScreen({super.key, required this.name,required this.photo,});
    final String name;
    final File photo;
 
   @override
   State<ArchiveScreen> createState() => _ArchiveScreenState();
 }
-
 class _ArchiveScreenState extends State<ArchiveScreen> {
-  List <NoteModel> archives= notes.where((element) => element.archive==true).toList();
   @override
   Widget build(BuildContext context) {
+    List <NoteModel> archives= Provider.of<HomeProvider>(context).notes.where((element) => element.archive==true).toList();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).brightness==Brightness.dark?Color(0xff18283A):Color(0xffF9FEFB),
-        title: Text("Archived Tasks",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
+        backgroundColor: Theme.of(context).brightness==Brightness.dark?const Color(0xff18283A):const Color(0xffF9FEFB),
+        title: const Text("Archived Tasks",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
         centerTitle: true,
       ),
-      body: archives.isEmpty? Center(
+      body: archives.isEmpty? const Center(
           child: Text("Not tasks founded")): ListView.builder(
         itemCount: archives.length,
         itemBuilder: (context, index){
@@ -36,29 +35,28 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return ArchiveDetailsScreen(
                     index: index,
-                    title: notes[index].title,
-                    dec: notes[index].des, time: notes[index].time, startDate: notes[index].startDate, endDate: notes[index].endDate, archive: notes[index].archive, name:widget.name , photo: widget.photo
+                    title: Provider.of<HomeProvider>(context).notes[index].title,
+                    dec: Provider.of<HomeProvider>(context).notes[index].des, time: Provider.of<HomeProvider>(context).notes[index].time, startDate: Provider.of<HomeProvider>(context).notes[index].startDate, endDate: Provider.of<HomeProvider>(context).notes[index].endDate, archive: Provider.of<HomeProvider>(context).notes[index].archive, name:widget.name , photo: widget.photo
 
                 );
               },));
             },
             child: Dismissible(
               background: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 alignment: Alignment.centerLeft,
-                child: Icon(Icons.delete),
                 color: Colors.red,
+                child: const Icon(Icons.delete),
               ),
               key: GlobalKey(),
-              child: notes[index].archive? ListTile(
+              child: Provider.of<HomeProvider>(context,listen: false).notes[index].archive? ListTile(
                   trailing: GestureDetector(
                     onTap: (){
-
                       setState(() {
-                        notes[index].archive=false;
                       });
+                        Provider.of<HomeProvider>(context,listen: false).notes[index].archive=false;
                     },
-                    child: Container(padding: EdgeInsets.all(10),
+                    child: Container(padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color:  AppColor.appbarcolor,
@@ -66,7 +64,7 @@ class _ArchiveScreenState extends State<ArchiveScreen> {
                       ),
 
 
-                      child: Text("Unarchive",style: TextStyle(color:notes[index].doneOrNot? AppColor.white:Colors.black),),
+                      child: Text("Unarchive",style: TextStyle(color:Provider.of<HomeProvider>(context).notes[index].doneOrNot? AppColor.white:Colors.black),),
                     ),
                   ),
                   title:Text(archives[index].title,style: Theme.of(context).textTheme.bodySmall,) ,

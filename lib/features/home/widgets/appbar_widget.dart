@@ -49,13 +49,13 @@ class AppBarWidget extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(right: 15),
-                child: Container(
+                child: SizedBox(
                   height: 70,
                   width: 70,
                   child: CircleAvatar(
                     child: Padding(
                       padding: const EdgeInsets.all(0),
-                      child: Container(
+                      child: SizedBox(
                         height: 100,
                         width: 100,
                         child: CircleAvatar(

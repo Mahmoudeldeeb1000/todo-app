@@ -1,15 +1,12 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:todo/core/models/note_model.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/core/share_widget/costom_botton.dart';
 import 'package:todo/core/utils/app_texts.dart';
-import 'package:todo/features/archive/archive_screen.dart';
-import 'package:todo/features/home/views/home_screen.dart';
-import 'package:todo/features/task_details/task_details_screen.dart';
+import 'package:todo/features/home/presentetion/views/home_screen.dart';
 import '../../core/utils/app_colors.dart';
+import '../home/presentetion/controller/home_controller.dart';
 class ArchiveDetailsScreen extends StatefulWidget {
   ArchiveDetailsScreen({super.key,required this.index, required this.title, required this.dec, required this.time, required this.startDate, required this.endDate, required this.archive, required this.name,required this.photo,  });
   final String title;
@@ -31,8 +28,8 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).brightness==Brightness.dark?Color(0xff18283A):Color(0xffF9FEFB),
-        title: Text("Task Details",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
+        backgroundColor: Theme.of(context).brightness==Brightness.dark?const Color(0xff18283A):const Color(0xffF9FEFB),
+        title: const Text("Task Details",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
         centerTitle: true,
       ),
       body: ListView(
@@ -43,7 +40,7 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
                 Container(
                     height: 70,
                     decoration: BoxDecoration(
-                      color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                      color:Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     width: double.infinity,
@@ -59,13 +56,13 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
                     )
                 )
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Padding(
                 padding: const EdgeInsets.all(15.0),
                 child:
                 Container(
                     decoration: BoxDecoration(
-                      color: Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                      color: Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
 
@@ -88,7 +85,7 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                  color:Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
@@ -103,7 +100,7 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                  color:Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
@@ -118,7 +115,7 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                  color:Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
@@ -128,17 +125,17 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 40,),
+            const SizedBox(height: 40,),
             CustomButton(
               colors: [
-                AppColor.bottom1,
-                AppColor.bottom2
+                Theme.of(context).brightness==Brightness.dark?const Color(0xff3F6188) :AppColor.appbarcolor,
+                Theme.of(context).brightness==Brightness.dark?const Color(0xff3F6188) :AppColor.appbarcolor,
               ],
               icon: Icons.archive,
               title: "Unarchive",
               onPressed: (){
-                notes[widget.index].archive=false;
-                print(notes[widget.index].archive.toString());
+                Provider.of<HomeProvider>(context,listen: false).notes[widget.index].archive=false;
+
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return HomeScreen(name: widget.name, photo: widget.photo);
                 },));
@@ -146,14 +143,14 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
             ),
             CustomButton(
               icon: Icons.delete,
-              colors: [
+              colors: const [
                 Color(0xffBD5461),
                 Color(0xffBD5461)
               ],
 
               title: "Delete",
               onPressed: (){
-                notes[widget.index].archive=true;
+                Provider.of<HomeProvider>(context,listen: false).notes[widget.index].archive=true;
                 showDeleteDialog(context);
               },
             )
@@ -168,7 +165,7 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
       builder: (BuildContext context) {
         return AlertDialog(
           content:    Text(AppTexts.areYouSureDeleteTask,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w500,
 
@@ -181,13 +178,13 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
               children: [
                 GestureDetector(
                   onTap: (){
-                    notes[widget.index].deleted=true;
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    Provider.of<HomeProvider>(context,listen: false).notes[widget.index].deleted=true;
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
                       return HomeScreen(
                           name:widget.name ,
                           photo: widget.photo);
                     },)).then((value) => setState(() {
-                      notes[widget.index].deleted=false;
+                      Provider.of<HomeProvider>(context,listen: false).notes[widget.index].deleted=false;
                     }));
                   },
                   child: Container(
@@ -197,7 +194,7 @@ class _ArchiveDetailsScreenState extends State<ArchiveDetailsScreen> {
                       color: const Color(0xffBD5461),
                     ),
                     child:  Text(AppTexts.yesText,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           fontFamily: "LexendDeca",

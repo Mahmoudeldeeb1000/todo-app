@@ -1,11 +1,11 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:todo/features/home/presentetion/views/home_screen.dart';
 import '../../../core/utils/app_Images.dart';
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_texts.dart';
-import '../../home/views/home_screen.dart';
+
 class RegesterBody extends StatefulWidget {
   const RegesterBody({super.key});
   @override
@@ -38,14 +38,14 @@ class _RegesterBodyState extends State<RegesterBody> {
               child: Container(
                 height: 120,
                 width: 120,
-                child: myPhoto==null? Icon(Icons.add_a_photo,color: AppColor.bottom1,size: 40,):
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.file(File(myPhoto!.path), fit: BoxFit.fill,)),
                 decoration: BoxDecoration(
                     border: Border.all(color: AppColor.bottom1),
                     borderRadius: BorderRadius.circular(20)
                 ),
+                child: myPhoto==null? Icon(Icons.add_a_photo,color: AppColor.bottom1,size: 40,):
+                ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.file(File(myPhoto!.path), fit: BoxFit.fill,)),
               ),
             ),
             TextButton(
@@ -58,7 +58,7 @@ class _RegesterBodyState extends State<RegesterBody> {
               },
               child: Text(   myPhoto==null? AppTexts.addphoto:AppTexts.changephoto,style: Theme.of(context).textTheme.bodySmall,),
             ),
-            SizedBox(height: 40,),
+            const SizedBox(height: 40,),
             TextFormField(
               controller: nameController,
               decoration: InputDecoration(
@@ -73,13 +73,13 @@ class _RegesterBodyState extends State<RegesterBody> {
                   ),
                   border: InputBorder.none,
 
-                  floatingLabelStyle: TextStyle(
+                  floatingLabelStyle: const TextStyle(
                       color: Colors.black
                   ),
                   hintText: "Enter your name",hintStyle: Theme.of(context).textTheme.bodySmall
               ),
             ),
-            SizedBox(height: 50,),
+            const SizedBox(height: 50,),
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
@@ -93,7 +93,7 @@ class _RegesterBodyState extends State<RegesterBody> {
               child: MaterialButton(
                 onPressed: (){
                   if(myPhoto==null || nameController.text.isEmpty ){
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("please enter your data")));
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("please enter your data")));
                   } else{
                     Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) {
                       return HomeScreen(photo: File(myPhoto!.path),

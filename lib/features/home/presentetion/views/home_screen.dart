@@ -1,19 +1,15 @@
 
 import 'dart:io';
-import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:todo/core/models/note_model.dart';
-import 'package:todo/core/utils/app_Images.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/core/utils/app_colors.dart';
 import 'package:todo/features/add_tasks/views/add_tasks_screen.dart';
-import 'package:todo/features/home/views/drawer_screen.dart';
+import 'package:todo/features/home/presentetion/controller/home_controller.dart';
+import 'package:todo/features/home/presentetion/views/drawer_screen.dart';
 import 'package:todo/features/home/widgets/home_body.dart';
-import 'package:todo/features/task_details/task_details_screen.dart';
 class HomeScreen extends StatefulWidget {
-   HomeScreen({super.key,required this.name,required this.photo ,});
+   const HomeScreen({super.key,required this.name,required this.photo ,});
   final String name;
   final File photo;
 
@@ -24,6 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
    return Scaffold(
+     backgroundColor: Theme.of(context).brightness==Brightness.dark?const Color(0xff18283A) :const Color(0xffFAFAFA),
+
      floatingActionButton: FloatingActionButton(
        shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(30)),
        backgroundColor: AppColor.appbarcolor,
@@ -32,8 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
          Navigator.push(context, MaterialPageRoute(builder: (context) {
            return AddTasksScreen(
-
-
              name: widget.name,
              photo: widget.photo,
            );
@@ -43,12 +39,10 @@ class _HomeScreenState extends State<HomeScreen> {
      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
      appBar: AppBar(
-     
-
        title: Column(
          children: [Text("Hello!",style: Theme.of(context).textTheme.bodySmall,),
            Text(widget.name),
-           SizedBox(height: 10,),
+           const SizedBox(height: 10,),
            Text(DateTime.now().toString().split(" ")[0],style: Theme.of(context).textTheme.bodySmall,),],
        ),
        toolbarHeight: 150,
@@ -58,13 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
            children: [
              Padding(
                padding: const EdgeInsets.only(right: 15),
-               child: Container(
+               child: SizedBox(
                  height: 70,
                  width: 70,
                  child: CircleAvatar(
                    child: Padding(
                      padding: const EdgeInsets.all(0),
-                     child: Container(
+                     child: SizedBox(
                        height: 100,
                        width: 100,
                        child: CircleAvatar(
@@ -85,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
          name: widget.name,
        ),
      ),
-     body: notes.isEmpty?
+     body: Provider.of<HomeProvider>(context).notes.isEmpty?
      Center(child: Text(" No Notes please add task",style: Theme.of(context).textTheme.bodySmall,),):
        HomeBody(name: widget.name, photo: widget.photo)
    );

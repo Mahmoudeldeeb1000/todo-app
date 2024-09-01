@@ -1,16 +1,15 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/core/models/note_model.dart';
 import 'package:todo/core/share_widget/costom_botton.dart';
 import 'package:todo/core/utils/app_texts.dart';
 import 'package:todo/features/archive/archive_screen.dart';
-import 'package:todo/features/home/views/home_screen.dart';
-import 'package:todo/features/task_details/widgets/task_details_body.dart';
+import 'package:todo/features/home/presentetion/views/home_screen.dart';
 import '../../core/utils/app_colors.dart';
+import '../home/presentetion/controller/home_controller.dart';
 class TaskDetailsScreen extends StatefulWidget {
-  TaskDetailsScreen({super.key, this.index, required this.title, required this.dec, required this.time, required this.startDate, required this.endDate, required this.archive, required this.name,required this.photo, });
+  TaskDetailsScreen({super.key, this.index, required this.title, required this.dec, required this.time, required this.startDate, required this.endDate, required this.archive, required this.name,required this.photo, required this.noteModel, });
   final String title;
   final String dec;
   final String time;
@@ -20,6 +19,8 @@ final bool archive;
 int? index;
   final String name;
   final File photo;
+  final NoteModel noteModel;
+
 
   @override
   State<TaskDetailsScreen> createState() => _TaskDetailsScreenState();
@@ -30,8 +31,8 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).brightness==Brightness.dark?Color(0xff18283A):Color(0xffF9FEFB),
-        title: Text("Task Details",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
+        backgroundColor: Theme.of(context).brightness==Brightness.dark?const Color(0xff18283A):const Color(0xffF9FEFB),
+        title: const Text("Task Details",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600),),
         centerTitle: true,
       ),
       body: ListView(
@@ -42,7 +43,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                 Container(
                     height: 70,
                     decoration: BoxDecoration(
-                      color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                      color:Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     width: double.infinity,
@@ -64,7 +65,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                 child:
                 Container(
                     decoration: BoxDecoration(
-                      color:  Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                      color:  Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     height: 120,
@@ -85,11 +86,11 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                  color: Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
-                    title:Text("Start Date"),
+                    title:const Text("Start Date"),
                     subtitle: Text(widget.startDate,style: TextStyle(color: AppColor.appbarcolor),),
                     leading: Icon(Icons.calendar_month_outlined,color: AppColor.appbarcolor,)
                 ),
@@ -100,11 +101,11 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                  color:Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
-                    title:Text("End Date"),
+                    title:const Text("End Date"),
                     subtitle: Text(widget.endDate,style: TextStyle(color: AppColor.appbarcolor),),
                     leading: Icon(Icons.calendar_month_outlined,color: AppColor.appbarcolor,)
                 ),
@@ -115,53 +116,48 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
               padding: const EdgeInsets.all(15.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color:Theme.of(context).brightness==Brightness.dark?Color(0xff24364B) :Colors.white,
+                  color:Theme.of(context).brightness==Brightness.dark?const Color(0xff24364B) :Colors.white,
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: ListTile(
-                    title:Text("Add Time"),
+                    title:const Text("Add Time"),
                     subtitle: Text(widget.time,style: TextStyle(color: AppColor.appbarcolor),),
                     leading: Icon(Icons.calendar_month_outlined,color: AppColor.appbarcolor,)
                 ),
               ),
             ),
-            SizedBox(height: 15,),
+            const SizedBox(height: 15,),
             CustomButton(
               colors: [
-                AppColor.bottom1,
-                AppColor.bottom2
+                Theme.of(context).brightness==Brightness.dark?const Color(0xff3F6188) :AppColor.appbarcolor,
+                Theme.of(context).brightness==Brightness.dark?const Color(0xff3F6188) :AppColor.appbarcolor,
               ],
               icon: Icons.archive,
               title: 'Archive',
               onPressed: (){
-                notes[widget.index!].archive=true;
-                print(notes[widget.index!].archive.toString());
-                setState(() {
-
-                });
+                Provider.of<HomeProvider>(context,listen: false).notes[widget.index!].archive=true;
+                // print(Provider.of<HomeProvider>(context).notes[widget.index!].archive.toString());
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ArchiveScreen(
                     photo: widget.photo,
                     name:  widget.name,
                   );
                 },)).then((value) => setState(() {
-
                 }));
               },
             ),
             CustomButton(
               icon: Icons.delete,
-              colors: [
+              colors: const [
                 Color(0xffBD5461),
                 Color(0xffBD5461)
               ],
               title: "Delete",
               onPressed: (){
-                notes[widget.index!].deleted=true;
+                Provider.of<HomeProvider>(context,listen: false).notes[widget.index!].deleted=true;
                 showDeleteDialog(context);
               },
             )
-
           ]
       )
     );
@@ -180,13 +176,15 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
               children: [
                 GestureDetector(
                   onTap: (){
-                    notes[widget.index!].deleted=true;
+                    Provider.of<HomeProvider>(context,listen: false).notes[widget.index!].deleted=true;
+                    Provider.of<HomeProvider>(context,listen: false).notes[widget.index!].archive=false;
+
                     Navigator.push(context, MaterialPageRoute(builder: (context) {
                       return HomeScreen(
                           name:widget.name ,
                           photo: widget.photo);
                     },)).then((value) => setState(() {
-                      notes[widget.index!].deleted=false;
+                      Provider.of<HomeProvider>(context).notes[widget.index!].deleted=false;
                     }));
                   },
                   child: Container(
@@ -196,7 +194,7 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                       color: const Color(0xffBD5461),
                     ),
                     child:  Text(AppTexts.yesText,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           fontFamily: "LexendDeca",
